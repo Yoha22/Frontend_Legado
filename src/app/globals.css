@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+/*
+  Sistema de diseño — Escuela de Béisbol Legado Diover Ávila.
+  Todos los valores están extraídos literalmente del prototipo de Claude Design
+  (`Legado Diover Avila.dc.html`), que usa estilos en línea. Aquí se convierten
+  en tokens para que ninguna pantalla vuelva a escribir un hex a mano.
+*/
+@theme {
+  /* Marca */
+  --color-marino: #0a1f3c;
+  --color-rojo: #c8102e;
+  --color-rojo-hover: #a00d25;
+  --color-rojo-oscuro: #8c1223;
+  --color-rojo-suave: #fdf3f4;
+  --color-rosa: #f2909e;
+
+  /* Fondos */
+  --color-hueso: #f5f4f1;
+  --color-arena: #fafaf8;
+
+  /* Bordes */
+  --color-marco: #e4e2dd;
+  --color-marco-suave: #efede8;
+  --color-borde-campo: #d8d5ce;
+  --color-borde-pildora: #ddd9d2;
+  --color-borde-control: #cfcbc4;
+
+  /* Marcadores de posición (fotos y videos aún no entregados) */
+  --color-ph-fondo: #edeae4;
+  --color-ph-fondo-video: #e5e1d9;
+  --color-ph-borde: #c3bfb6;
+  --color-ph-borde-suave: #d6d2ca;
+  --color-ph-texto: #8a8577;
+  --color-ph-texto-suave: #a8a296;
+
+  /* Texto sobre fondo claro */
+  --color-texto: #3f4856;
+  --color-texto-suave: #5a6472;
+  --color-texto-tenue: #6b7480;
+  --color-texto-apagado: #8a8f99;
+  --color-texto-deshabilitado: #c7cbd2;
+
+  /* Texto sobre fondo marino */
+  --color-azul-claro: #c3d0e0;
+  --color-azul-medio: #8fa3be;
+  --color-azul-nav: #a9bcd2;
+  --color-azul-oscuro: #5d7796;
+
+  /* Estado */
+  --color-verde-ok: #0f7b4f;
+  --color-whatsapp: #25d366;
+
+  /* Tipografía */
+  --font-titulo: var(--font-oswald), "Oswald", sans-serif;
+  --font-cuerpo: var(--font-source-sans), "Source Sans 3", system-ui, sans-serif;
+
+  /* Radios */
+  --radius-boton: 6px;
+  --radius-campo: 8px;
+  --radius-media: 10px;
+  --radius-card: 12px;
+
+  /* Sombras */
+  --shadow-card: 0 4px 12px rgba(10, 31, 60, 0.05);
+  --shadow-card-hover: 0 10px 24px rgba(10, 31, 60, 0.1);
+  --shadow-flotante: 0 10px 28px rgba(0, 0, 0, 0.22);
+  --shadow-modal: 0 20px 50px rgba(0, 0, 0, 0.25);
+
+  /* Animación */
+  --animate-aparecer: aparecer 240ms ease-out;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-hueso);
+    color: var(--color-marino);
+    font-family: var(--font-cuerpo);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /*
+    Accesibilidad: foco visible en TODO control, no solo en los inputs.
+    El prototipo solo definía el foco de los campos de formulario.
+  */
+  :focus-visible {
+    outline: 2px solid var(--color-rojo);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--color-rojo);
+    color: #fff;
+  }
+}
+
+@layer components {
+  /* Contenedor estándar del prototipo: 1280px con 32px de aire (20px en móvil). */
+  .contenedor {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (width >= 48rem) {
+    .contenedor {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Anillo rojo de foco de los campos, tal cual el prototipo. */
+  .campo {
+    border: 1px solid var(--color-borde-campo);
+    border-radius: var(--radius-campo);
+    padding: 12px 14px;
+    font-size: 15px;
+    color: var(--color-marino);
+    background: #fff;
+    outline: none;
+    width: 100%;
+    transition:
+      border-color 120ms,
+      box-shadow 120ms;
+  }
+
+  .campo:focus {
+    outline: none;
+    border-color: var(--color-rojo);
+    box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.14);
+  }
+
+  .campo[aria-invalid="true"] {
+    border-color: var(--color-rojo);
+  }
+
+  .campo:disabled,
+  .campo[readonly] {
+    color: var(--color-texto-apagado);
+    background: var(--color-hueso);
+  }
+}
